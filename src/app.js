@@ -4,13 +4,25 @@ import {connect} from 'react-redux';
 import {createAction} from 'redux-actions';
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer';
 
-import KeplerGl from 'kepler.gl';
+//import KeplerGl from 'kepler.gl';
 import {addDataToMap, wrapTo, toggleModal} from 'kepler.gl/actions';
+import {
+  SidebarFactory,
+  PanelHeaderFactory,
+  PanelToggleFactory,
+  CustomPanelsFactory,
+  injectComponents
+} from 'kepler.gl/components';
 
+import GeoDaSidePanelFactory from './components/geoda-panel';
 import {showModal, hideAndShowSidePanel} from './actions/actions';
 
 const MAPBOX_TOKEN = "pk.eyJ1IjoibGl4dW45MTAiLCJhIjoiY2locXMxcWFqMDAwenQ0bTFhaTZmbnRwaiJ9.VRNeNnyb96Eo-CorkJmIqg";
 
+// Inject custom components; comment import KeplerGl from 'kepler.gl'
+const KeplerGl = injectComponents([
+  [CustomPanelsFactory, GeoDaSidePanelFactory]
+]);
 
 class App extends Component {
     componentDidMount() {
