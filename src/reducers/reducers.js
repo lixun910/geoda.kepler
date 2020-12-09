@@ -1,6 +1,7 @@
 import {createAction, handleActions} from 'redux-actions';
 import KeplerGlSchema from 'kepler.gl/schemas';
-import {INIT, SET_MAP_CONFIG, SHOW_MODAL} from '../actions/actions'
+import {showDatasetTable} from 'kepler.gl/actions';
+import {INIT, SET_MAP_CONFIG, SHOW_MODAL, SHOW_GEODA_INFO, SHOW_TABLE} from '../actions/actions'
 
 
 // INITIAL_STATE
@@ -8,7 +9,8 @@ export const initialState = {
     appName: 'geoda.js',
     loaded: false,
     modal: null,
-    file_ids : {}
+    file_ids : {},
+    show_verion: false,
 };
 
 // REDUCER
@@ -25,7 +27,11 @@ const appReducer = handleActions(
       [SHOW_MODAL]: (state, action) => ({
         ...state,
         modal: action.payload
-      })
+      }),
+      [SHOW_GEODA_INFO]: (state, action) => ({
+        ...state,
+        show_version: action.payload
+      }),
     },
     initialState
 );

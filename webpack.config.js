@@ -19,6 +19,10 @@ const config = {
                 include: path.join(__dirname, 'src'),
                 exclude: [/node_modules/],
             },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+              },
         ],
     },
 };

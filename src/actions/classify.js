@@ -1,4 +1,4 @@
-import jsgeoda from 'jsgeoda';
+//import jsgeoda from 'jsgeoda';
 
 export const quantileMap = createAction('GEODA_QUANTILE');
 

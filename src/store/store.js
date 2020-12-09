@@ -5,15 +5,13 @@ import appReducer from '../reducers/reducers';
 import window from 'global/window';
 import {loadJsgeoda} from '../actions/actions';
 
-import jsgeoda from 'jsgeoda';
-
 const customizedKeplerGlReducer = keplerGlReducer.initialState({
     uiState: {
-      // set null to hide side panel when mounted
-      activeSidePanel: 'layer', 
+      // set null to hide side panel when mounted, default 'layer'
+      activeSidePanel: null, 
 
-      // set null to hide all modals whtn mounted
-      currentModal: 'addData',
+      // set null to hide all modals whtn mounted, 'addData'
+      currentModal: null,
 
       // set true to hide side panel to disallower user customize the map
       readOnly: false,
@@ -52,7 +50,25 @@ const customizedKeplerGlReducer = keplerGlReducer.initialState({
         ...state.uiState,
         readOnly: !state.uiState.readOnly
       }
-    })
+    }),
+    OPEN_FILE_DIALOG: (state, action) => ({
+      ...state,
+      uiState: {
+        ...state.uiState,
+        currentModal: 'addData' 
+      }
+    }),
+    SHOW_TABLE: (state, action) => ({
+      ...state,
+      uiState: {
+        ...state.uiState,
+        currentModal: 'dataTable' 
+      },
+      visState: {
+        ...state.visState,
+        editingDataset: action.payload 
+      }
+    }),
   });
 
 const reducers = combineReducers({
@@ -66,7 +82,7 @@ const composedReducer = (state, action) => {
   switch (action.type) {
     case '@@kepler.gl/LOAD_FILES':
       console.log("load jsgeoda here");
-      loadJsgeoda(state, action);
+      //loadJsgeoda(state, action);
       break;
 
     case '@@kepler.gl/PROCESS_FILE_CONTENT':
@@ -74,7 +90,9 @@ const composedReducer = (state, action) => {
       break;
 
     case '@@kepler.gl/LOAD_FILES_SUCCESS':
-      // do update;
+      // do update; action result has all fields information
+      // e.g. {name:'REGION', tableFieldIndex:2, type: 'integer', analyzeTYPE: 'INT'}
+      // info {label: "natregimes.geojson", format:"geojson"}
       console.log("after load geojson");
       break;
   }
